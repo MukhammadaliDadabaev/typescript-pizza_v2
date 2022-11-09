@@ -1,0 +1,100 @@
+.root {
+  position: relative;
+  left: -10px;
+}
+
+.input {
+  width: 500px;
+  padding: 11px 19px;
+  padding-left: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 7px;
+  // font-size: 14.1px;
+  font-size: 19px;
+  // transition: 0.3s all ease-in-out;
+  cursor: pointer;
+
+  &:focus {
+    // width: 600px;
+    // font-size: 19px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    // cursor: text;
+  }
+}
+
+.icon {
+  position: absolute;
+  opacity: 0.5;
+  width: 21px;
+  height: 20px;
+  left: 13px;
+  top: 14px;
+}
+
+.clearIcon {
+  position: absolute;
+  opacity: 0.5;
+  width: 28px;
+  height: 28px;
+  right: 10px;
+  top: 11px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 1060px) {
+  .input {
+    width: 100px;
+    padding: 8px 15px;
+    padding-left: 40px;
+
+    &:focus {
+      width: 350px;
+      font-size: 17px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      cursor: text;
+    }
+  }
+}
+
+@media (max-width: 645px) {
+  .input {
+    width: 100px;
+    margin: 7px 0;
+    padding: 7px 15px;
+    padding-left: 40px;
+
+    &:focus {
+      width: 350px;
+      font-size: 15px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      cursor: text;
+    }
+  }
+
+  .icon {
+    width: 19px;
+    height: 18px;
+    top: 17px;
+  }
+}
+
+@media (max-width: 530px) {
+  .input {
+    width: 100px;
+    margin: 7px 0;
+    padding: 9px 17px;
+    padding-left: 40px;
+
+    &:focus {
+      width: 300px;
+      font-size: 17px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      cursor: text;
+    }
+  }
+}

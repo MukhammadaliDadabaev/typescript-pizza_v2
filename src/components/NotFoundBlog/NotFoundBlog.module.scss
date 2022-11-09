@@ -1,0 +1,16 @@
+.root {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 100px;
+  text-align: center;
+
+  span {
+    font-size: 4rem;
+  }
+}
+
+.root {
+  .description {
+    font-size: 23px;
+  }
+}
