@@ -5,14 +5,18 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 // import Button from "./Button";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { selectCard } from "../redux/slices/cardSlice";
 import Search from "./Search";
 
 function Header() {
   // Location
   const location = useLocation();
   // REDUX-HOOKS
-  const { items, totalPrice } = useSelector((state) => state.card);
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const { items, totalPrice } = useSelector(selectCard);
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
 
   return (
     <div className="header">

@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import cardEmtyImg from "../assets/img/empty-cart.png";
 
-const CardEmty = () => {
+const CardEmty: React.FC = () => {
   return (
-    <div class="cart cart--empty">
+    <div className="cart cart--empty">
       <h2>
-        Savatcha bo'sh<icon>😕</icon>
+        Savatcha bo'sh<span>😕</span>
       </h2>
       <p>
         Siz hali pitsa buyurtma qilmagan bo'lsangiz kerak.
@@ -14,7 +14,7 @@ const CardEmty = () => {
         Pitsa buyurtma qilish uchun asosiy sahifaga o'ting.
       </p>
       <img src={cardEmtyImg} alt="Empty cart" />
-      <Link to="/" class="button button--black">
+      <Link to="/" className="button button--black">
         <span>Вернуться назад</span>
       </Link>
     </div>

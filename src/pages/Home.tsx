@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 // qs link
 import qs from "qs";
 // react-router
@@ -7,21 +7,25 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // Redux-toolkit
 import {
+  filterCardPageSort,
   setCategoryId,
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
 
-import { SearchContext } from "../components/Search";
 // components
 import Categories from "../components/Categories";
 import Sort, { sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlog";
 import Skeleton from "../components/PizzaBlog/Skeleton";
 import Pagination from "../components/Pagination";
-import { fetchPizzas } from "../redux/slices/pizzaSlice";
+import {
+  cardIsLoading,
+  cardPizzas,
+  fetchPizzas,
+} from "../redux/slices/pizzaSlice";
 
-const Home = () => {
+const Home: React.FC = () => {
   // ROUTER
   const navigate = useNavigate();
   // REDUX-STATE
@@ -31,23 +35,19 @@ const Home = () => {
   const isMounted = useRef(false);
 
   // Fetch-API-JSON cards
-  const cards = useSelector((state) => state.pizza.items);
+  const cards = useSelector(cardPizzas);
   // isLoading-status
-  const status = useSelector((state) => state.pizza.status);
-  const { categoryId, sort, currentPage } = useSelector(
-    (state) => state.filter
-  );
+  const status = useSelector(cardIsLoading);
+  const { categoryId, sort, currentPage, searchValue } =
+    useSelector(filterCardPageSort);
 
-  // useContext-Provider
-  const { searchValue } = useContext(SearchContext);
-
-  // REACT-REDUX
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangeCategory = (idx: number) => {
+    dispatch(setCategoryId(idx));
   };
 
-  const onChangeCategory = (id) => {
-    dispatch(setCategoryId(id));
+  // REACT-REDUX
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   // Fetch-API
@@ -58,6 +58,7 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : "";
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -115,7 +116,7 @@ const Home = () => {
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   // OBJECT-ARRAY
-  const pizzas = cards.map((obj) => (
+  const pizzas = cards.map((obj: any) => (
     <Link key={obj.id} to={`/pizza/${obj.id}`}>
       <PizzaBlock {...obj} />{" "}
     </Link>

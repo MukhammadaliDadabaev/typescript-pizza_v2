@@ -43,6 +43,10 @@ export const pizzaSlice = createSlice({
   },
 });
 
+// REFACTORE-useSelector
+export const cardPizzas = (state) => state.pizza.items;
+export const cardIsLoading = (state) => state.pizza.status;
+
 export const { setItems } = pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

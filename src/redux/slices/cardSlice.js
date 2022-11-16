@@ -9,16 +9,6 @@ export const cardSlice = createSlice({
   name: "card",
   initialState,
   reducers: {
-    //---------------> Add-Korzinka
-    //-----> BU 1-USUL
-    // addItem(state, action) {
-    //   state.items.push(action.payload);
-    //   state.totalPrice = state.items.reduce((sum, obj) => {
-    //     return obj.price + sum;
-    //   }, 0);
-    // },
-
-    //--------------2-USUL
     addItem(state, action) {
       const findItem = state.items.find((obj) => obj.id === action.payload.id);
       if (findItem) {
@@ -55,6 +45,11 @@ export const cardSlice = createSlice({
     },
   },
 });
+
+// REFACTORE-useSelector
+export const selectCard = (state) => state.card;
+export const selectCardItemById = (id) => (state) =>
+  state.card.items.find((obj) => obj.id === id);
 
 export const { addItem, minusItem, removeItem, clearItems } = cardSlice.actions;
 

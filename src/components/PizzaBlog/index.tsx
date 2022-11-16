@@ -1,18 +1,33 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../redux/slices/cardSlice";
+import { addItem, selectCardItemById } from "../../redux/slices/cardSlice";
 // react-icon
 import { BsCartPlus } from "react-icons/bs";
+// import { type } from "os";
 
 // Type-Pizza
 const typeNames = ["тонкое", "традиционное"];
 
-function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
+type PizzaBlogProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+
+const PizzaBlock: React.FC<PizzaBlogProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+}) => {
   // REDUX-DISPATCH
   const dispatch = useDispatch();
-  const cardItem = useSelector((state) =>
-    state.card.items.find((obj) => obj.id === id)
-  );
+  const cardItem = useSelector(selectCardItemById(id));
   // State
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
@@ -75,6 +90,6 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;

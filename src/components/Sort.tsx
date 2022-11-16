@@ -1,13 +1,20 @@
+// import { type } from "@testing-library/user-event/dist/type";
 import React, { useEffect, useRef, useState } from "react";
 // react-icons
 import { TiArrowForward } from "react-icons/ti";
 // React-Redux-state
 import { useDispatch, useSelector } from "react-redux";
 // Redux-toolkit
-import { setSort } from "../redux/slices/filterSlice";
+import { selectSort, setSort } from "../redux/slices/filterSlice";
+
+//---> TYPE MODEL LIST-MENU
+type SortItem = {
+  name: string;
+  sortProperty: string;
+};
 
 // MODEL LIST-MENU
-export const sortList = [
+export const sortList: SortItem[] = [
   { name: "популярности (DESC)", sortProperty: "rating" },
   { name: "популярности (ASC)", sortProperty: "-rating" },
   { name: "цене (DESC)", sortProperty: "price" },
@@ -19,16 +26,16 @@ export const sortList = [
 function Sort() {
   // REDUX-STATE
   const dispatch = useDispatch();
-  const sort = useSelector((state) => state.filter.sort);
+  const sort = useSelector(selectSort);
 
   // MODAL FOCUS-CURCOR
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   // STATE
   const [open, setOpen] = useState(false);
 
   // MODEL-HANDLER FUNC
-  const onClickListItem = (obj) => {
+  const onClickListItem = (obj: SortItem) => {
     dispatch(setSort(obj));
     setOpen(false);
   };
@@ -36,7 +43,7 @@ function Sort() {
   // MODAL FOCUS-CURCOR
   useEffect(() => {
     // console.log("Sort-bosildi, mount");
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (!event.path.includes(sortRef.current)) {
         setOpen(false);
         // console.log("Home-page bosildi");
@@ -55,7 +62,7 @@ function Sort() {
     <div ref={sortRef} className="sort">
       <div className="sort__label">
         <TiArrowForward className="arrow" />
-        <b>Сортировка по:</b>
+        <b>Сортировка: </b>
         <span onClick={() => setOpen(!open)}>{sort.name}</span>
       </div>
       {open && (

@@ -2,8 +2,7 @@ import React from "react";
 
 import styles from "./NotFoundBlog.module.scss";
 
-console.log(styles);
-const NotFoundBlog = () => {
+const NotFoundBlog: React.FC = () => {
   return (
     <div className={styles.root}>
       <h1>
