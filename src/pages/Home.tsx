@@ -84,6 +84,7 @@ const Home: React.FC = () => {
     }
     // Bu saqlaydi
     isMounted.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId, sort.sortProperty, currentPage]);
 
   // ROUTER-LINK---> 1-render
@@ -104,6 +105,7 @@ const Home: React.FC = () => {
       );
       isSearch.current = true;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // API-DATE
@@ -113,6 +115,7 @@ const Home: React.FC = () => {
     getPizzas();
 
     isSearch.current = false;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   // OBJECT-ARRAY

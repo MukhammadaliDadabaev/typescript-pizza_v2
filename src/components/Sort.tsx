@@ -12,6 +12,10 @@ type SortItem = {
   name: string;
   sortProperty: string;
 };
+// TYPE OnClick variable
+type PopupClick = MouseEvent & {
+  path: Node[];
+};
 
 // MODEL LIST-MENU
 export const sortList: SortItem[] = [
@@ -43,8 +47,9 @@ function Sort() {
   // MODAL FOCUS-CURCOR
   useEffect(() => {
     // console.log("Sort-bosildi, mount");
-    const handleClickOutside = (event: any) => {
-      if (!event.path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as PopupClick;
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setOpen(false);
         // console.log("Home-page bosildi");
       }
