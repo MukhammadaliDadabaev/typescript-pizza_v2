@@ -1,21 +1,21 @@
 import React, { useEffect, useRef } from "react";
 // qs link
-import qs from "qs";
+// import qs Link,from "qs";
 // react-router
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // React-Redux-state
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // Redux-toolkit
 import {
   filterCardPageSort,
   setCategoryId,
   setCurrentPage,
-  setFilters,
+  // setFilters,
 } from "../redux/slices/filterSlice";
 
 // components
 import Categories from "../components/Categories";
-import Sort, { sortList } from "../components/Sort";
+import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlog";
 import Skeleton from "../components/PizzaBlog/Skeleton";
 import Pagination from "../components/Pagination";
@@ -23,16 +23,18 @@ import {
   cardIsLoading,
   cardPizzas,
   fetchPizzas,
+  // SearchPizzasParams,, { sortList }
 } from "../redux/slices/pizzaSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
   // ROUTER
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // REDUX-STATE
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   // Filter-ROUTER-Render
   const isSearch = useRef(false);
-  const isMounted = useRef(false);
+  // const isMounted = useRef(false);
 
   // Fetch-API-JSON cards
   const cards = useSelector(cardPizzas);
@@ -58,13 +60,12 @@ const Home: React.FC = () => {
     const search = searchValue ? `&search=${searchValue}` : "";
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
         category,
         search,
-        currentPage,
+        currentPage: String(currentPage),
       })
     );
 
@@ -72,41 +73,48 @@ const Home: React.FC = () => {
   };
 
   // QUERY-qs ---> 2-render
-  useEffect(() => {
-    if (isMounted.current) {
-      const queryString = qs.stringify({
-        sortProperty: sort.sortProperty,
-        categoryId,
-        currentPage,
-      });
+  // useEffect(() => {
+  //   if (isMounted.current) {
+  //     const queryString = qs.stringify({
+  //       sortProperty: sort.sortProperty,
+  //       categoryId,
+  //       currentPage,
+  //     });
 
-      navigate(`?${queryString}`);
-    }
-    // Bu saqlaydi
-    isMounted.current = true;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoryId, sort.sortProperty, currentPage]);
+  //     navigate(`/?${queryString}`);
+  //   }
+
+  //   if (!window.location.search) {
+  //     dispatch(fetchPizzas({} as SearchPizzasParams));
+  //   }
+  //   // Bu saqlaydi
+  //   isMounted.current = true;
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [categoryId, sort.sortProperty, currentPage]);
 
   // ROUTER-LINK---> 1-render
   // Bu agar birinchi render bo'lsa, parametrlarni tekshiring va uni reduxda saqlang
-  useEffect(() => {
-    if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+  // useEffect(() => {
+  //   if (window.location.search) {
+  //     const params = qs.parse(
+  //       window.location.search.substring(1)
+  //     ) as unknown as SearchPizzasParams;
 
-      const sort = sortList.find(
-        (obj) => obj.sortProperty === params.sortProperty
-      );
+  //     const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
 
-      dispatch(
-        setFilters({
-          ...params,
-          sort,
-        })
-      );
-      isSearch.current = true;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //     dispatch(
+  //       setFilters({
+  //         searchValue: params.search,
+  //         categoryId: Number(params.category),
+  //         currentPage: Number(params.currentPage),
+  //         sort: sort || sortList[0],
+  //       })
+  //     );
+
+  //     isSearch.current = true;
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   // API-DATE
   // Bu 1-chi render-dan keyin card-to'ladi
@@ -120,9 +128,9 @@ const Home: React.FC = () => {
 
   // OBJECT-ARRAY
   const pizzas = cards.map((obj: any) => (
-    <Link key={obj.id} to={`/pizza/${obj.id}`}>
-      <PizzaBlock {...obj} />{" "}
-    </Link>
+    // <Link key={obj.id} to={`/pizza/${obj.id}`}>
+    <PizzaBlock {...obj} />
+    // </Link>
   ));
 
   // CARD isLoading method

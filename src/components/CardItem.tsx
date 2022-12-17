@@ -3,7 +3,12 @@ import React from "react";
 import { HiPlus, HiMinus } from "react-icons/hi";
 import { FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { addItem, minusItem, removeItem } from "../redux/slices/cardSlice";
+import {
+  addItem,
+  minusItem,
+  removeItem,
+  CartItem,
+} from "../redux/slices/cardSlice";
 // import { type } from "os";
 
 type CardItemProps = {
@@ -16,7 +21,7 @@ type CardItemProps = {
   imageUrl: string;
 };
 
-const CardItem: React.FC<CardItemProps> = ({
+const CardItemBlock: React.FC<CardItemProps> = ({
   id,
   title,
   type,
@@ -33,7 +38,7 @@ const CardItem: React.FC<CardItemProps> = ({
     dispatch(
       addItem({
         id,
-      })
+      } as CartItem)
     );
   };
 
@@ -89,4 +94,4 @@ const CardItem: React.FC<CardItemProps> = ({
     </div>
   );
 };
-export default CardItem;
+export default CardItemBlock;

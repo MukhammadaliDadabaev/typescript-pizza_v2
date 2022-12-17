@@ -1,6 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-const initialState = {
+export type CartItem = {
+  id: string;
+  title: string;
+  price: number;
+  count: number;
+  type: string;
+  size: number;
+  imageUrl: string;
+};
+interface CartSliceState {
+  totalPrice: number;
+  items: CartItem[];
+}
+
+const initialState: CartSliceState = {
   totalPrice: 0,
   items: [],
 };
@@ -9,7 +24,7 @@ export const cardSlice = createSlice({
   name: "card",
   initialState,
   reducers: {
-    addItem(state, action) {
+    addItem(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find((obj) => obj.id === action.payload.id);
       if (findItem) {
         findItem.count++;
@@ -26,7 +41,7 @@ export const cardSlice = createSlice({
     },
 
     //-------------> Korzinka-remov-card
-    minusItem(state, action) {
+    minusItem(state, action: PayloadAction<string>) {
       const findItem = state.items.find((obj) => obj.id === action.payload);
 
       if (findItem) {
@@ -34,7 +49,7 @@ export const cardSlice = createSlice({
       }
     },
 
-    removeItem(state, action) {
+    removeItem(state, action: PayloadAction<string>) {
       state.items = state.items.filter((obj) => obj.id === action.payload);
     },
 
@@ -47,8 +62,8 @@ export const cardSlice = createSlice({
 });
 
 // REFACTORE-useSelector
-export const selectCard = (state) => state.card;
-export const selectCardItemById = (id) => (state) =>
+export const selectCard = (state: RootState) => state.card;
+export const selectCardItemById = (id: string) => (state: RootState) =>
   state.card.items.find((obj) => obj.id === id);
 
 export const { addItem, minusItem, removeItem, clearItems } = cardSlice.actions;
